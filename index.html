@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Titt's Questionable Character Design Brief</title>
+<style>
+:root {
+  --green:#005244; --cream:#efefdc; --magenta:#aa1b87; --mint:#41bea6;
+  --paper:#fffdf4; --ink:#173f38; --line:rgba(0,82,68,.25);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.page{width:min(980px,calc(100% - 24px));margin:0 auto;padding:42px 0 56px}
+.hero{text-align:center;margin-bottom:26px}
+h1{margin:0;color:var(--green);font-size:clamp(2.2rem,6vw,4.5rem);line-height:.95}
+.subtitle{max-width:760px;margin:16px auto 0;line-height:1.6}
+.controls{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:26px 0 24px}
+button{appearance:none;border:0;font:inherit;font-weight:800;cursor:pointer}
+.control{border-radius:999px;padding:12px 18px}
+.primary{background:var(--magenta);color:white}
+.secondary{background:var(--green);color:var(--cream)}
+.ghost{background:transparent;color:var(--green);border:2px solid var(--green)}
+.generator{display:grid;gap:10px}
+.row{display:grid;grid-template-columns:minmax(170px,250px) minmax(0,1fr) 46px 46px;border:2px solid var(--line);border-radius:16px;overflow:hidden;background:var(--paper)}
+.label{border-radius:0;padding:15px 16px;text-align:left;background:var(--mint);color:var(--green);font-weight:900}
+.label:hover{filter:brightness(.96)}
+.value{min-height:58px;padding:14px 16px;display:flex;align-items:center;line-height:1.4;overflow-wrap:anywhere}
+.icon-btn{border-radius:0;background:rgba(65,190,166,.10);color:var(--green);border-left:1px solid rgba(0,82,68,.12);min-height:58px}
+.icon-btn:hover{background:rgba(65,190,166,.22)}
+.icon-btn.locked{background:var(--green);color:var(--cream)}
+.delete-btn{color:var(--magenta);background:rgba(170,27,135,.06)}
+.note{text-align:center;font-size:.88rem;opacity:.72;margin-top:18px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--green);color:var(--cream);padding:10px 16px;border-radius:999px;font-weight:800;opacity:0;pointer-events:none;transition:opacity .18s}
+.toast.show{opacity:1}
+@media(max-width:700px){
+ .page{width:min(100% - 12px,980px);padding-top:24px}
+ .row{grid-template-columns:minmax(105px,130px) minmax(0,1fr) 38px 38px}
+ .label{padding:10px;font-size:.82rem}
+ .value{padding:10px;font-size:.88rem;min-height:54px}
+ .icon-btn{min-height:54px}
+}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="hero">
+<h1>Titt's Questionable<br>Character Design Brief</h1>
+<p class="subtitle">Stuck on what your character should look like? Let’s rummage through Titt’s character filing cabinet for ideas. No promises they’ll be good ones.</p>
+</header>
+
+<div class="controls">
+<button class="control primary" id="generateAll">Generate Brief</button>
+<button class="control secondary" id="clearAll">Clear All</button>
+<button class="control secondary" id="unlockAll">Unlock All</button>
+<button class="control ghost" id="copyBrief">Copy Brief</button>
+</div>
+
+<section class="generator" id="generator" aria-live="polite"></section>
+<p class="note">Click a category name to roll only that result. 🔒 Lock it to keep it. ✕ clears only that row.</p>
+</main>
+<div class="toast" id="toast">Brief copied!</div>
+
+<script src="database.js"></script>
+<script>
+/* Data is stored in database.js so it is easy to edit. */
+const state = Object.fromEntries(fields.map(([key]) => [key, {value:"",locked:false}]));
+
+function randomItem(arr) {
+  return arr[Math.floor(Math.random()*arr.length)];
+}
+
+function render() {
+  const wrap = document.getElementById("generator");
+  wrap.innerHTML = "";
+  for (const [key,label] of fields) {
+    const row = document.createElement("div");
+    row.className = "row";
+    row.innerHTML = `
+      <button class="label" data-action="roll" data-key="${key}" title="Roll ${label}">${label}</button>
+      <div class="value">${state[key].value}</div>
+      <button class="icon-btn ${state[key].locked ? "locked" : ""}" data-action="lock" data-key="${key}" title="${state[key].locked ? "Unlock" : "Lock"}">${state[key].locked ? "🔒" : "🔓"}</button>
+      <button class="icon-btn delete-btn" data-action="clear" data-key="${key}" title="Clear">✕</button>`;
+    wrap.appendChild(row);
+  }
+}
+
+function generateAll() {
+  for (const [key] of fields) {
+    if (!state[key].locked) state[key].value = randomItem(DATA[key]);
+  }
+  render();
+}
+
+document.getElementById("generator").addEventListener("click", e => {
+  const btn = e.target.closest("button[data-key]");
+  if (!btn) return;
+  const key = btn.dataset.key;
+  const action = btn.dataset.action;
+  if (action === "roll") state[key].value = randomItem(DATA[key]);
+  if (action === "lock") state[key].locked = !state[key].locked;
+  if (action === "clear") state[key].value = "";
+  render();
+});
+
+document.getElementById("generateAll").addEventListener("click", generateAll);
+
+document.getElementById("clearAll").addEventListener("click", () => {
+  for (const key of Object.keys(state)) state[key].value = "";
+  render();
+});
+
+document.getElementById("unlockAll").addEventListener("click", () => {
+  for (const key of Object.keys(state)) state[key].locked = false;
+  render();
+});
+
+document.getElementById("copyBrief").addEventListener("click", async () => {
+  const lines = [
+    "TITT'S QUESTIONABLE CHARACTER DESIGN BRIEF",
+    "-------------------------------------------",
+    ...fields.map(([key,label]) => `${label}: ${state[key].value}`),
+    "-------------------------------------------"
+  ];
+  const text = lines.join("\n");
+  try {
+    await navigator.clipboard.writeText(text);
+    const toast = document.getElementById("toast");
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 1400);
+  } catch {
+    const blob = new Blob([text], {type:"text/plain;charset=utf-8"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "titts-questionable-character-design-brief.txt";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+});
+
+function resetBlank() {
+  for (const key of Object.keys(state)) {
+    state[key].value = "";
+    state[key].locked = false;
+  }
+  render();
+}
+
+window.addEventListener("pageshow", resetBlank);
+</script>
+</body>
+</html>

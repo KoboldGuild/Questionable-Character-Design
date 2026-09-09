@@ -36,3 +36,5 @@ Keep `index.html` and `database.js` in the same repository folder.
 
 For GitHub Pages:
 **Settings → Pages → Deploy from a branch → main → /(root)**
+
+Copyright © 2026 The Kobold Guild / Sofia Vigo. All rights reserved. Titt's Questionable Character Design brief generator is provided as a free-to-use web tool. The source code, written content, generator databases, branding and artwork may not be copied, redistributed, republished or used in another product without permission.

@@ -33,6 +33,20 @@ button{appearance:none;border:0;font:inherit;font-weight:800;cursor:pointer}
 .note{text-align:center;font-size:.88rem;opacity:.72;margin-top:18px}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--green);color:var(--cream);padding:10px 16px;border-radius:999px;font-weight:800;opacity:0;pointer-events:none;transition:opacity .18s}
 .toast.show{opacity:1}
+  /* ============================================================
+   RESULT SHUFFLE ANIMATION
+   ============================================================ */
+
+.value.shuffling {
+  font-style: italic;
+  opacity: 0.72;
+}
+
+.label.is-rolling,
+.primary.is-rolling {
+  pointer-events: none;
+  opacity: 0.78;
+}
 @media(max-width:700px){
  .page{width:min(100% - 12px,980px);padding-top:24px}
  .row{grid-template-columns:minmax(105px,130px) minmax(0,1fr) 38px 38px}
@@ -1386,7 +1400,65 @@ function generateField(key) {
   }
   return randomItem(DATA[key]);
 }
+/* ============================================================
+   VISUAL SHUFFLE EFFECT
+   ============================================================ */
 
+function shuffleField(key, duration = 650) {
+  return new Promise((resolve) => {
+    const rowButton = document.querySelector(
+      `button.label[data-key="${key}"]`
+    );
+
+    const valueEl = rowButton
+      ? rowButton.parentElement.querySelector(".value")
+      : null;
+
+    if (!valueEl) {
+      state[key].value = generateField(key);
+      render();
+      resolve();
+      return;
+    }
+
+    rowButton.classList.add("is-rolling");
+    valueEl.classList.add("shuffling");
+
+    const started = performance.now();
+
+    const tick = () => {
+
+      /* Show a temporary random result */
+      valueEl.textContent = generateField(key);
+
+      const elapsed = performance.now() - started;
+
+      /* Stop shuffling and choose the final result */
+      if (elapsed >= duration) {
+        state[key].value = generateField(key);
+
+        valueEl.textContent = state[key].value;
+
+        valueEl.classList.remove("shuffling");
+        rowButton.classList.remove("is-rolling");
+
+        resolve();
+        return;
+      }
+
+      /*
+       * Starts quickly and gradually slows down,
+       * giving it the "landing on a result" effect.
+       */
+      const progress = elapsed / duration;
+      const delay = 45 + (progress * 110);
+
+      setTimeout(tick, delay);
+    };
+
+    tick();
+  });
+}
 function render() {
   const wrap = document.getElementById("generator");
   wrap.innerHTML = "";
@@ -1402,11 +1474,22 @@ function render() {
   }
 }
 
-function generateAll() {
+async function generateAll() {
+  const button = document.getElementById("generateAll");
+
+  button.classList.add("is-rolling");
+
+  const jobs = [];
+
   for (const [key] of fields) {
-    if (!state[key].locked) state[key].value = generateField(key);
+    if (!state[key].locked) {
+      jobs.push(shuffleField(key, 700));
+    }
   }
-  render();
+
+  await Promise.all(jobs);
+
+  button.classList.remove("is-rolling");
 }
 
 document.getElementById("generator").addEventListener("click", e => {
@@ -1414,7 +1497,7 @@ document.getElementById("generator").addEventListener("click", e => {
   if (!btn) return;
   const key = btn.dataset.key;
   const action = btn.dataset.action;
-  if (action === "roll") state[key].value = generateField(key);
+  if (action === "roll") {shuffleField(key, 700); return;}
   if (action === "lock") state[key].locked = !state[key].locked;
   if (action === "clear") state[key].value = "";
   render();

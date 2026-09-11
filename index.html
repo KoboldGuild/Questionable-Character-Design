@@ -33,9 +33,6 @@ button{appearance:none;border:0;font:inherit;font-weight:800;cursor:pointer}
 .note{text-align:center;font-size:.88rem;opacity:.72;margin-top:18px}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--green);color:var(--cream);padding:10px 16px;border-radius:999px;font-weight:800;opacity:0;pointer-events:none;transition:opacity .18s}
 .toast.show{opacity:1}
-  /* ============================================================
-   RESULT SHUFFLE ANIMATION
-   ============================================================ */
 
 .value.shuffling {
   font-style: italic;
@@ -47,6 +44,7 @@ button{appearance:none;border:0;font:inherit;font-weight:800;cursor:pointer}
   pointer-events: none;
   opacity: 0.78;
 }
+
 @media(max-width:700px){
  .page{width:min(100% - 12px,980px);padding-top:24px}
  .row{grid-template-columns:minmax(105px,130px) minmax(0,1fr) 38px 38px}
@@ -111,584 +109,456 @@ button{appearance:none;border:0;font:inherit;font-weight:800;cursor:pointer}
 
 const DATA = {
   // ============================================================
-  // BASE FORM
-  // Add new results by copying a line and changing the text.
-  // IMPORTANT: every result except the last one needs a comma.
+  // BASE
+  // The basic creature/body concept. Keep this broad enough that
+  // the other categories still have room to shape the design.
   // ============================================================
-  baseForm: [
+  base: [
     "Humanoid",
-    "Furry",
-    "Beastfolk",
-    "Elf-ish",
-    "Goblin-ish",
-    "Giant",
-    "Tiny humanoid",
-    "Fairy",
-    "Demon",
-    "Angel",
-    "Undead",
-    "Vampire",
-    "Were-creature",
-    "Aquatic humanoid",
-    "Reptilian humanoid",
-    "Avian humanoid",
-    "Insectoid",
-    "Amphibian",
-    "Plant person",
-    "Mushroom person",
-    "Construct",
-    "Elemental",
-    "Eldritch being",
-    "Shapeshifter",
+    "Compact goblin-like humanoid",
     "Garden gnome",
-    "Porcelain doll",
-    "Wooden puppet",
-    "Marionette",
-    "Rag doll",
-    "Living statue",
-    "Animated armour",
-    "Haunted suit of armour",
-    "Scarecrow",
-    "Mannequin",
-    "Clockwork toy",
-    "Music box ballerina",
-    "Gargoyle",
-    "Snowman",
-    "Candle",
-    "Candelabra",
-    "Teapot",
-    "Kettle",
-    "Vase",
-    "Grandfather clock",
-    "Mirror",
-    "Chandelier",
-    "Wardrobe",
-    "Suitcase",
-    "Book",
-    "Painting",
-    "Stained-glass window",
-    "Church bell",
-    "Street lamp",
-    "Umbrella",
-    "Sword",
-    "Shield",
-    "Potted plant",
-    "Massive tree",
-    "Bonsai tree",
-    "Rose bush",
-    "Sunflower",
-    "Venus flytrap",
-    "Cactus",
-    "Mushroom",
-    "Moss-covered log",
-    "Walking hedge",
-    "Bouquet of flowers",
-    "Patch of weeds",
-    "Sentient vegetable",
-    "Pumpkin",
-    "Onion",
-    "Potato",
-    "Suspiciously large courgette",
-    "Jelly on a plate",
-    "Sentient pudding",
-    "Walking cake",
-    "Gingerbread person",
-    "Loaf of bread",
-    "Croissant",
-    "Wheel of cheese",
-    "Bowl of soup",
-    "Giant ravioli",
-    "Sentient spaghetti",
-    "Fried egg",
-    "Meatball",
-    "Birthday cake",
-    "Mouldy sandwich",
-    "A single baked bean",
+    "Furry",
+    "Mushroom person",
+    "Bird person",
+    "Reptilian",
+    "Frog or toad person",
+    "Construct",
+    "Puppet",
+    "Doll",
     "Slime",
-    "Ooze",
-    "Cloud",
-    "Living shadow",
+    "Jelly-like being",
     "Living flame",
-    "Sentient puddle",
-    "Ball of light",
-    "Ball of darkness",
-    "Floating eyeball",
-    "Giant mouth",
-    "Disembodied hands",
-    "Biblically questionable angel",
-    "Geometrically impossible being",
-    "Walking constellation",
-    "Living galaxy",
-    "A hole in reality",
-    "A concept given flesh",
-    "A pile of bones with ambitions",
-    "Several creatures pretending to be one creature",
-    "Something under a sheet",
-    "Nobody knows, including the artist",
-    "Cat",
-    "Dog",
-    "Fox",
-    "Wolf",
-    "Rabbit",
-    "Hare",
-    "Rat",
-    "Mouse",
-    "Bat",
-    "Goat",
-    "Sheep",
-    "Cow",
-    "Horse",
-    "Deer",
-    "Pig",
-    "Bear",
-    "Raccoon",
-    "Opossum",
-    "Capybara",
-    "Otter",
-    "Seal",
-    "Frog",
-    "Toad",
-    "Gecko",
-    "Crocodile",
-    "Snake",
-    "Axolotl",
-    "Shark",
-    "Goldfish",
-    "Octopus",
-    "Crab",
-    "Moth",
-    "Bee",
-    "Beetle",
-    "Spider",
-    "Centipede",
-    "Pigeon",
-    "Crow",
-    "Owl",
-    "Chicken",
-    "Goose",
-    "Peacock"
+    "Living shadow",
+    "Treant",
+    "Potted plant person",
+    "Angel",
+    "Devil",
+    "Eldritch being",
+    "Elven",
+    "Giant",
+    "Ogre",
+    "Fairy",
+    "Horse-like creature",
+    "Centaur",
+    "Hydra"
   ],
 
   // ============================================================
-  // SIZE
-  // Add new results by copying a line and changing the text.
-  // IMPORTANT: every result except the last one needs a comma.
+  // HEAD SHAPE
+  // Focuses on silhouette, facial proportions and overall structure.
   // ============================================================
-  size: [
-    "Fits in your palm",
-    "Handbag sized",
-    "House-cat sized",
-    "Knee height",
-    "Child sized",
-    "Short",
-    "Average",
-    "Tall",
-    "Very tall",
-    "Basketball-player tall",
-    "Doorframe hazard",
-    "Absolutely enormous",
-    "Horse sized",
-    "Car sized",
-    "Elephant sized",
-    "Cottage sized",
-    "House sized",
-    "Cathedral sized",
-    "Kaiju",
-    "Mountain sized",
-    "Technically a geographical feature",
-    "Changes size depending on mood",
-    "Appears differently sized to everyone",
-    "Much smaller than their personality suggests",
-    "Much larger than anybody expected",
-    "Exactly 3 feet tall and furious about it"
+  headShape: [
+    "Oval",
+    "Round",
+    "Square",
+    "Heart-shaped",
+    "Long and narrow",
+    "Broad and heavy",
+    "Triangular",
+    "Diamond-shaped",
+    "Very small head",
+    "Oversized head",
+    "Flat-faced",
+    "Strong brow and heavy forehead",
+    "Pronounced cheekbones",
+    "Soft rounded cheeks",
+    "Long muzzle",
+    "Short muzzle",
+    "Broad muzzle",
+    "Narrow pointed muzzle",
+    "Beaked",
+    "Frog-like wide head",
+    "Reptilian wedge-shaped head",
+    "Insect-like head",
+    "Mushroom-cap shaped",
+    "Doll-like round head",
+    "Egg-shaped",
+    "Top-heavy",
+    "Wide jaw with a narrow forehead",
+    "Narrow jaw with a broad forehead",
+    "Perfectly symmetrical",
+    "Strongly asymmetrical",
+    "Almost completely featureless"
   ],
 
   // ============================================================
-  // HOW MANY EYES?
-  // Add new results by copying a line and changing the text.
-  // IMPORTANT: every result except the last one needs a comma.
+  // EARS
+  // Shape, size, placement or an alternative feature.
+  // ============================================================
+  ears: [
+    "Small rounded human ears",
+    "Large rounded human ears",
+    "Prominent sticking-out ears",
+    "Long pointed ears",
+    "Short pointed ears",
+    "Very broad pointed ears",
+    "Drooping pointed ears",
+    "Extremely long elf-like ears",
+    "Tall rabbit ears",
+    "Drooping rabbit ears",
+    "Small cat-like ears",
+    "Large cat-like ears",
+    "Fox-like ears",
+    "Wolf-like ears",
+    "Bear-like rounded ears",
+    "Mouse-like round ears",
+    "Goat-like horizontal ears",
+    "Deer-like ears",
+    "Horse-like ears",
+    "Bat-like ears",
+    "Fin-shaped ears",
+    "Frilled reptilian ears",
+    "Feathered ear tufts",
+    "Moth-like feathery antennae instead of ears",
+    "Insect antennae instead of ears",
+    "Mechanical ears",
+    "Porcelain sculpted ears",
+    "One ear noticeably larger than the other",
+    "One damaged or torn ear",
+    "Multiple pairs of ears",
+    "Ears positioned unusually high on the head",
+    "Ears positioned unusually low on the head",
+    "Ears hidden beneath hair or fur",
+    "No visible ears"
+  ],
+
+  // ============================================================
+  // EYES
+  // Shape, proportion, placement and unusual eye treatments.
   // ============================================================
   eyes: [
-    "No eyes",
-    "1 enormous central eye",
-    "1 tiny eye in an otherwise featureless face",
-    "2 normally positioned eyes",
-    "2 eyes positioned vertically",
-    "2 eyes dramatically far apart",
-    "2 eyes placed low on the cheeks",
-    "2 eyes placed near the temples",
-    "3 eyes, with one centred on the forehead",
-    "3 eyes arranged vertically",
-    "3 completely asymmetrical eyes",
-    "3 eyes with one much larger than the others",
-    "4 eyes arranged in two neat pairs",
-    "4 eyes clustered like a spider",
-    "4 eyes arranged around the head",
-    "4 eyes with the lower pair much smaller",
-    "5 eyes forming a star-like arrangement",
-    "5 eyes scattered asymmetrically across the face",
-    "6 eyes in three pairs",
-    "6 eyes scattered asymmetrically across the face",
-    "6 eyes running down the sides of the neck",
-    "8 spider-like eyes",
-    "8 eyes running down the neck",
-    "8 eyes spread across the shoulders",
-    "8 tiny eyes circling one large eye",
-    "10 tiny eyes surrounding two larger ones",
-    "12 eyes scattered across the body",
-    "12 eyes arranged in two vertical rows",
-    "20 tiny eyes covering the face",
-    "Dozens of eyes embedded in the skin",
-    "Dozens of eyes running down both arms",
-    "Dozens of eyes hidden between feathers",
-    "Hundreds of tiny eyes forming a pattern",
-    "Too many eyes to reasonably draw",
-    "An uncertain number of eyes floating around the head",
-    "Several eyes floating around the shoulders like jewellery",
-    "One normal pair plus tiny eyes in both palms",
-    "One normal pair plus an eye in the centre of the chest",
-    "Eyes only on one side of the body",
-    "All eyes positioned along a single curved line",
-    "Eyes arranged like a constellation across the face",
-    "Eyes clustered around the mouth",
-    "Eyes hidden in the hair",
-    "Eyes running down the tail",
-    "An amount of eyes that somehow changes when counted"
+    "Small almond-shaped eyes",
+    "Large almond-shaped eyes",
+    "Large round eyes",
+    "Small round eyes",
+    "Wide-set eyes",
+    "Close-set eyes",
+    "Deep-set eyes",
+    "Prominent eyes",
+    "Heavy-lidded eyes",
+    "Upturned eyes",
+    "Downturned eyes",
+    "Very narrow eyes",
+    "Large doe-like eyes",
+    "Sharp feline eyes",
+    "Round amphibian eyes",
+    "Reptilian eyes",
+    "Bird-like eyes",
+    "Solid black eyes",
+    "Solid white eyes",
+    "Glowing eyes",
+    "Metallic eyes",
+    "Gemstone-like eyes",
+    "Compound insect eyes",
+    "One eye",
+    "Three eyes",
+    "Four eyes in two pairs",
+    "Several small eyes clustered together",
+    "Mismatched eyes",
+    "One noticeably larger eye",
+    "One normal eye and one unusual eye",
+    "Eyes without visible pupils",
+    "Vertical pupils",
+    "Horizontal pupils",
+    "Star-shaped pupils",
+    "Unusually large pupils",
+    "Tiny pinprick pupils",
+    "Heavy dark circles",
+    "Extremely long eyelashes",
+    "No visible eyes",
+    "Eyes hidden behind hair",
+    "Eyes positioned slightly too far apart",
+    "Eyes positioned slightly too close together"
   ],
 
   // ============================================================
-  // HOW MANY ARMS?
-  // Add new results by copying a line and changing the text.
-  // IMPORTANT: every result except the last one needs a comma.
+  // NOSE
+  // A dedicated facial design category so noses do not get ignored.
   // ============================================================
-  arms: [
-    "0 arms",
-    "1 arm, attached normally",
-    "1 enormous arm in the centre of the chest",
-    "1 arm growing from the upper back",
-    "1 arm floating beside the body",
-    "1 tiny arm growing from the shoulder",
-    "2 arms, attached normally",
-    "2 arms, both on the same side",
-    "2 arms growing from the back",
-    "2 arms floating beside the shoulders",
-    "2 arms attached low on the torso",
-    "2 arms attached high near the neck",
-    "2 arms with one dramatically larger than the other",
-    "2 arms joined together at the elbow",
-    "3 arms, two normal and one beneath them",
-    "3 arms arranged asymmetrically",
-    "3 arms, with one growing from the back",
-    "3 arms floating around the torso",
-    "3 arms, all different sizes",
-    "4 arms, stacked in two pairs",
-    "4 arms arranged around the ribcage",
-    "4 arms, with two normal and two growing from the back",
-    "4 arms, all on one side",
-    "4 arms, all floating around the body",
-    "4 arms, one enormous pair and one tiny pair",
-    "4 arms radiating from the shoulders",
-    "4 arms with one pair mechanical and one pair organic",
-    "4 arms attached around the waist",
-    "5 arms arranged like a fan",
-    "5 arms, all asymmetrical",
-    "6 arms arranged symmetrically down the torso",
-    "6 arms radiating from the shoulders",
-    "6 arms, all different sizes",
-    "6 arms floating behind them like a halo",
-    "6 arms branching like tree limbs",
-    "6 arms arranged in three stacked pairs",
-    "8 arms arranged like spider limbs",
-    "8 arms radiating from the back",
-    "8 arms floating independently around the body",
-    "8 arms attached in a ring around the torso",
-    "8 arms, becoming smaller toward the hips",
-    "10 tiny arms arranged around the waist",
-    "10 arms fanning out behind the body",
-    "12 arms, becoming progressively smaller down the torso",
-    "12 arms arranged symmetrically like a many-limbed idol",
-    "20 arms forming a fan behind the body",
-    "Far too many arms, clustered wherever the artist can fit them",
-    "Far too many arms, all floating and apparently functional",
-    "An unclear number of arms emerging from shadow",
-    "Several arms visible only as silhouettes behind the body"
+  nose: [
+    "Small straight nose",
+    "Long straight nose",
+    "Short rounded nose",
+    "Broad rounded nose",
+    "Wide nose with a low bridge",
+    "Wide nose with a high bridge",
+    "Narrow nose with a high bridge",
+    "Strong Roman nose",
+    "Aquiline nose",
+    "Hooked nose",
+    "Upturned nose",
+    "Downturned nose",
+    "Flat nose",
+    "Button nose",
+    "Bulbous nose",
+    "Long pointed nose",
+    "Crooked nose",
+    "Broken-looking nose",
+    "Broad flared nostrils",
+    "Very small nose",
+    "Very large prominent nose",
+    "Cat-like nose",
+    "Dog-like nose",
+    "Pig-like snout",
+    "Reptilian nostrils",
+    "Frog-like flat nostrils",
+    "Beak instead of a nose",
+    "Skull-like nasal cavity",
+    "Mechanical nose",
+    "No visible nose"
   ],
 
   // ============================================================
-  // HOW MANY LEGS?
-  // Add new results by copying a line and changing the text.
-  // IMPORTANT: every result except the last one needs a comma.
+  // MOUTH & TEETH
+  // Mouth shape plus a drawable dental feature.
   // ============================================================
-  legs: [
-    "0 legs, they float",
-    "0 legs, serpentine lower body",
-    "0 legs, just a suspicious amount of tentacles",
-    "0 legs, roots trail from the lower body instead",
-    "0 legs, the body ends in a cloud",
-    "1 enormous central leg",
-    "1 leg and apparently that's enough",
-    "1 leg with a hoof",
-    "1 leg floating beneath the torso",
-    "2 normally positioned legs",
-    "2 digitigrade legs",
-    "2 enormous bird-like legs",
-    "2 legs floating beneath the torso",
-    "2 legs attached asymmetrically",
-    "2 legs with one much longer than the other",
-    "2 legs ending in completely different feet",
-    "3 legs arranged like a tripod",
-    "3 completely asymmetrical legs",
-    "3 legs radiating from the hips",
-    "4 legs in a quadruped arrangement",
-    "4 legs in a centaur-like arrangement",
-    "4 legs radiating from the hips",
-    "4 legs, with one pair significantly smaller",
-    "4 legs arranged like an insect",
-    "4 legs floating beneath the body",
-    "5 legs arranged like a star",
-    "6 insect-like legs",
-    "6 legs arranged around the lower torso",
-    "6 completely different legs",
-    "6 legs radiating from a spherical lower body",
-    "8 spider-like legs",
-    "8 legs radiating around the body",
-    "8 legs floating beneath them",
-    "8 legs arranged in two uneven rows",
-    "10 tiny legs",
-    "10 legs arranged like the spokes of a wheel",
-    "12 legs becoming progressively smaller",
-    "12 legs arranged symmetrically beneath a wide body",
-    "Centipede quantities of tiny legs",
-    "Far too many legs arranged like the spokes of a wheel",
-    "Far too many legs clustered beneath the torso",
-    "Anatomically inexplicable but apparently functional legs",
-    "Several legs growing from the back and curving downward",
-    "A lower body made of interlocking legs",
-    "Legs that float separately but move in perfect sync"
+  mouthTeeth: [
+    "Small mouth with thin lips",
+    "Small mouth with full lips",
+    "Wide mouth with thin lips",
+    "Wide mouth with full lips",
+    "Large expressive mouth",
+    "Soft rounded lips",
+    "Strong defined cupid's bow",
+    "Downturned mouth",
+    "Upturned mouth",
+    "Asymmetrical mouth",
+    "Very wide grin",
+    "Tiny delicate mouth",
+    "Prominent front teeth",
+    "Slightly crooked teeth",
+    "Gap between the front teeth",
+    "Small pointed canine teeth",
+    "Large vampire-like fangs",
+    "One visible fang",
+    "Two lower tusks",
+    "Two upper tusks",
+    "Large boar-like tusks",
+    "Sharp triangular teeth",
+    "Shark-like rows of teeth",
+    "Tiny needle-like teeth",
+    "Large rodent incisors",
+    "Herbivore-like flat teeth",
+    "Gold teeth",
+    "One missing tooth",
+    "One broken fang",
+    "Beak instead of a mouth",
+    "Frog-like wide mouth",
+    "Reptilian mouth",
+    "Mouth extends unusually far across the face",
+    "Vertical mouth",
+    "No visible mouth"
   ],
 
   // ============================================================
-  // HANDS & FEET SITUATION
-  // Add new results by copying a line and changing the text.
-  // IMPORTANT: every result except the last one needs a comma.
+  // ARMS & HANDS
+  // Proportion, anatomy, number and hand design.
   // ============================================================
-  handsFeet: [
-    "Completely normal",
-    "Human hands, human feet",
-    "Paws",
-    "Claws",
-    "Talons",
-    "Hooves",
-    "Split hooves",
-    "Bird feet",
-    "Webbed hands and feet",
-    "Frog fingers",
-    "Gecko pads",
-    "Monkey-like feet",
-    "Hands instead of feet",
-    "Feet instead of hands",
-    "Four-fingered hands",
+  armsHands: [
+    "Human-like arms and hands",
+    "Long slender arms",
+    "Short sturdy arms",
+    "Very muscular arms",
+    "Soft heavy arms",
+    "Disproportionately long forearms",
+    "Disproportionately large upper arms",
+    "Very long fingers",
+    "Short broad fingers",
+    "Large hands",
+    "Tiny hands",
+    "Delicate hands",
+    "Broad powerful hands",
     "Three-fingered hands",
-    "Two enormous fingers",
-    "Tiny delicate hands",
-    "Comically large hands",
-    "Skeleton hands",
-    "Mechanical hands",
-    "Wooden hands",
-    "Porcelain hands",
-    "Tentacle fingertips",
-    "Crab claws",
-    "Lobster claws",
-    "Praying-mantis arms",
-    "Mole digging claws",
-    "Bear paws",
-    "Raccoon hands",
-    "Opposable toes",
-    "No hands, just vibes",
-    "Every finger is a tiny hand"
+    "Four-fingered hands",
+    "Six-fingered hands",
+    "Clawed hands",
+    "Paw-like hands",
+    "Bird-like talons",
+    "Webbed hands",
+    "Frog-like fingertips",
+    "Gecko-like finger pads",
+    "Hoof-like hands",
+    "Crab claws instead of hands",
+    "Tentacle-like fingers",
+    "Mechanical arms",
+    "Wooden articulated arms",
+    "Porcelain doll arms",
+    "Skeletal arms",
+    "One artificial arm",
+    "One arm significantly larger than the other",
+    "Two normal arms plus a smaller secondary pair",
+    "Four arms",
+    "Six arms",
+    "Floating hands with no visible arms",
+    "No arms"
   ],
 
   // ============================================================
-  // TAIL SITUATION
-  // Add new results by copying a line and changing the text.
-  // IMPORTANT: every result except the last one needs a comma.
+  // LEGS & FEET
+  // Proportion, stance, anatomy and foot design.
   // ============================================================
-  tail: [
-    "No tail",
-    "Tiny nub",
-    "Short tail",
-    "Long tail",
-    "Extremely long tail",
-    "Fluffy tail",
-    "Enormous fluffy tail",
-    "Cat tail",
-    "Dog tail",
-    "Fox tail",
-    "Wolf tail",
-    "Rat tail",
-    "Cow tail",
-    "Horse tail",
-    "Pig corkscrew tail",
-    "Lizard tail",
-    "Crocodile tail",
-    "Snake tail",
-    "Fish tail",
-    "Shark tail",
-    "Beaver tail",
-    "Peacock tail",
-    "Scorpion tail",
-    "Devil tail",
-    "Dragon tail",
-    "Prehensile tail",
-    "Armoured tail",
-    "Clubbed tail",
-    "Bladed tail",
-    "Feathered tail",
-    "Flowering tail",
-    "Skeletal tail",
-    "Mechanical tail",
-    "Tentacle tail",
-    "Tail with a hand on the end",
-    "Tail with a mouth on the end",
-    "Tail with an eye on the end",
-    "Two tails",
-    "Three tails",
-    "Nine tails",
-    "A concerning number of tails",
-    "Tail is larger than the character",
-    "Tail has its own personality",
-    "They insist it isn't a tail"
+  legsFeet: [
+    "Human-like legs and feet",
+    "Long slender legs",
+    "Short sturdy legs",
+    "Very muscular legs",
+    "Heavy powerful thighs",
+    "Very thin legs",
+    "Digitigrade legs",
+    "Plantigrade animal-like legs",
+    "Bird-like legs",
+    "Frog-like legs",
+    "Reptilian legs",
+    "Goat-like legs",
+    "Horse-like legs",
+    "Cat-like hind legs",
+    "Canine hind legs",
+    "Insect-like legs",
+    "Spider-like legs",
+    "Webbed feet",
+    "Large paws",
+    "Small paws",
+    "Clawed feet",
+    "Bird talons",
+    "Cloven hooves",
+    "Horse hooves",
+    "Large bare human-like feet",
+    "Tiny feet",
+    "Mechanical legs",
+    "Wooden puppet legs",
+    "Porcelain doll legs",
+    "Skeletal legs",
+    "One artificial leg",
+    "One leg noticeably larger than the other",
+    "Four legs",
+    "Six legs",
+    "Serpentine lower body instead of legs",
+    "Tentacles instead of legs",
+    "Roots instead of legs",
+    "Floating with no visible legs"
   ],
 
   // ============================================================
-  // SKIN SITUATION
-  // Add new results by copying a line and changing the text.
-  // IMPORTANT: every result except the last one needs a comma.
+  // SKIN
+  // Surface and material study prompts for rendering practice.
   // ============================================================
   skin: [
-    "Human-like skin",
-    "Very freckled",
+    "Smooth human-like skin",
+    "Freckled skin",
+    "Heavily freckled skin",
     "Vitiligo",
-    "Scales",
-    "Tiny scales",
-    "Huge armour-like scales",
-    "Fish scales",
-    "Snake scales",
-    "Iridescent scales",
-    "Feathers",
-    "Downy feathers",
-    "Peacock feathers",
-    "Fur",
-    "Very fluffy fur",
+    "Visible scars",
+    "Weathered skin",
+    "Soft translucent skin",
+    "Very rough skin",
+    "Wrinkled skin",
+    "Loose folded skin",
+    "Fine scales",
+    "Large overlapping scales",
+    "Snake-like scales",
+    "Crocodilian scales",
+    "Fish-like scales",
+    "Short fur",
+    "Long fur",
     "Patchy fur",
-    "Velvet-like fur",
-    "Frog skin",
+    "Fine feathers",
+    "Large layered feathers",
+    "Bare bird-like skin",
+    "Frog-like skin",
+    "Wet amphibian skin",
     "Shark-like skin",
-    "Blubber",
-    "Chitin",
-    "Beetle shell",
-    "Bark",
-    "Moss",
-    "Leaves",
-    "Flowers",
-    "Mushrooms",
-    "Vines",
+    "Insect chitin",
+    "Glossy beetle-like shell",
+    "Tree bark",
+    "Smooth wood",
+    "Moss-covered bark",
+    "Leaves growing across the body",
+    "Flower-covered skin",
+    "Mushroom-textured skin",
     "Stone",
-    "Marble",
+    "Polished marble",
     "Cracked stone",
     "Porcelain",
+    "Cracked porcelain",
     "Ceramic",
-    "Wood",
-    "Metal",
+    "Polished metal",
     "Rusted metal",
     "Glass",
     "Stained glass",
     "Crystal",
-    "Jelly",
-    "Slime",
+    "Translucent jelly",
+    "Glossy slime",
     "Wax",
     "Smoke",
-    "Flame",
+    "Living flame",
+    "Living shadow",
     "Water",
-    "Clouds",
-    "Shadow",
-    "Living darkness",
-    "Stars",
-    "Looks like outer space",
-    "Translucent",
-    "Transparent",
-    "Glowing",
-    "Bioluminescent",
-    "Covered in eyes",
-    "Covered in tiny mouths",
-    "Changes texture when embarrassed",
-    "Looks wet. Isn't."
+    "Cloud-like",
+    "Star-filled cosmic skin",
+    "Bioluminescent skin"
   ],
 
   // ============================================================
-  // HORNS, WINGS & TEETH?
-  // Add new results by copying a line and changing the text.
-  // IMPORTANT: every result except the last one needs a comma.
+  // EXTRAS
+  // One strong silhouette/detail addition: tails, horns, wings, etc.
   // ============================================================
   extras: [
-    "No horns, no wings, normal teeth",
-    "2 tiny horns and small fangs",
-    "1 enormous horn growing from the forehead",
-    "1 broken horn and otherwise normal teeth",
-    "2 huge ram horns and blunt herbivore teeth",
-    "2 tiny horns, no wings, shark teeth",
-    "4 horns framing the face",
-    "4 tiny horns around the forehead and small fangs",
-    "6 horns growing asymmetrically around the head",
-    "A crown of tiny horns and one gold fang",
-    "Antlers with small fangs",
-    "One antler, no explanation",
-    "Branching antlers and normal teeth",
-    "Horns growing from the jawline and tiny fangs",
-    "Horns growing from the shoulders instead of the head",
-    "2 tiny decorative wings behind the ears",
-    "2 enormous feathered wings from the back",
-    "2 bat wings growing from the hips",
-    "2 dragon wings that are far too large for the body",
-    "2 tiny useless wings and enormous tusks",
-    "4 feathered wings arranged in two pairs",
-    "4 insect wings growing from the back",
-    "4 mismatched wings, no horns, small fangs",
-    "6 wings forming a halo-like silhouette",
-    "6 tiny wings scattered across the back",
-    "Tiny wings on the ankles and tiny horns",
-    "One enormous wing and one tiny wing",
-    "Several mismatched wings",
-    "Wings that completely dwarf the body",
-    "Normal teeth except for two enormous fangs",
-    "Shark-like rows of teeth",
-    "Huge rodent incisors",
-    "Tusks curling upwards",
-    "Tusks curling downwards",
-    "Teeth extending slightly beyond the lips",
-    "Far too many teeth for the available mouth",
-    "No teeth, enormous horns",
-    "No teeth, tiny butterfly wings",
-    "One gold tooth and one broken horn",
-    "Horns along the jaw + moth wings + tiny fangs",
-    "Antlers + butterfly wings + shark teeth",
-    "Tiny horns + enormous wings + no teeth",
-    "Six horns + six wings + six fangs",
-    "Goat horns + bat wings + blunt teeth",
-    "Deer antlers + feathered wings + vampire fangs",
-    "One unicorn horn + tiny fairy wings + rodent teeth",
-    "Four horns + no wings + tusks",
-    "No horns + six wings + shark teeth",
-    "Horns growing from the spine + tiny fangs",
-    "Wing-like fins instead of wings + antlers",
-    "A ring of tiny horns around the neck + normal teeth",
-    "Yes to all three. Excessively."
+    "No additional features",
+    "A short tail",
+    "A long thin tail",
+    "A long fluffy tail",
+    "An enormous fluffy tail",
+    "A reptilian tail",
+    "A feathered tail",
+    "A fish-like tail",
+    "A scorpion tail",
+    "A prehensile tail",
+    "Two tails",
+    "Three tails",
+    "Nine tails",
+    "Two small horns",
+    "Two long horns",
+    "Two curled ram horns",
+    "Two swept-back horns",
+    "One central horn",
+    "Four horns",
+    "A crown of small horns",
+    "Antlers",
+    "Branch-like antlers",
+    "Asymmetrical horns",
+    "One broken horn",
+    "Two small feathered wings",
+    "Two enormous feathered wings",
+    "Four feathered wings",
+    "Two bat-like wings",
+    "Four bat-like wings",
+    "Insect wings",
+    "Butterfly wings",
+    "Moth wings",
+    "Dragonfly wings",
+    "Tiny decorative wings",
+    "One wing",
+    "Mismatched wings",
+    "A reptilian neck frill",
+    "A feathered neck ruff",
+    "A mane",
+    "A line of dorsal spines",
+    "A shell",
+    "A turtle-like shell",
+    "A floating halo",
+    "A ring of floating eyes",
+    "Floating crystals",
+    "A floating crown",
+    "Vines growing from the body",
+    "Flowers growing from the body",
+    "Mushrooms growing from the body",
+    "Branches growing like antlers",
+    "Tentacles emerging from the back"
   ],
 
   // ============================================================
   // FASHION STYLE
-  // Add new results by copying a line and changing the text.
-  // IMPORTANT: every result except the last one needs a comma.
+  // Preserved from the previous version.
   // ============================================================
   fashion: [
     "Practical adventurer",
@@ -748,8 +618,7 @@ const DATA = {
 
   // ============================================================
   // ACCESSORIES
-  // Add new results by copying a line and changing the text.
-  // IMPORTANT: every result except the last one needs a comma.
+  // Preserved from the previous version.
   // ============================================================
   accessories: [
     "None",
@@ -809,8 +678,7 @@ const DATA = {
 
   // ============================================================
   // PERSONALITY VIBE
-  // Add new results by copying a line and changing the text.
-  // IMPORTANT: every result except the last one needs a comma.
+  // Affects expression, posture, styling and overall presence.
   // ============================================================
   personality: [
     "Golden retriever",
@@ -862,43 +730,8 @@ const DATA = {
   ],
 
   // ============================================================
-  // HOW ATTRACTIVE ARE THEY SUPPOSED TO BE?
-  // Add new results by copying a line and changing the text.
-  // IMPORTANT: every result except the last one needs a comma.
-  // ============================================================
-  attractiveness: [
-    "Actively hideous",
-    "Creature only a mother could love",
-    "Ugly-cute",
-    "Weirdly adorable",
-    "Unconventionally attractive",
-    "Average",
-    "Cute",
-    "Pretty",
-    "Handsome",
-    "Beautiful",
-    "Striking",
-    "Very attractive",
-    "Distractingly attractive",
-    "Painfully attractive",
-    "Suspiciously attractive",
-    "Villainously attractive",
-    "Ethereally beautiful",
-    "Intimidatingly beautiful",
-    "Looks expensive",
-    "Looks like they smell amazing",
-    "Illegal cheekbones",
-    "Could ruin your life",
-    "Definitely will ruin your life",
-    "Tumblr would have been unbearable about them",
-    "The internet is going to be weird about this one",
-    "The artist accidentally made them hot"
-  ],
-
-  // ============================================================
-  // WOULD THEY BE THE LEAD IN A ROMANTASY?
-  // Add new results by copying a line and changing the text.
-  // IMPORTANT: every result except the last one needs a comma.
+  // ROMANTASY LEAD?
+  // Silly, but still gives visual/presence direction.
   // ============================================================
   romantasy: [
     "Absolutely not. Background NPC energy.",
@@ -937,168 +770,8 @@ const DATA = {
   ],
 
   // ============================================================
-  // FINAL QUESTIONABLE DETAIL
-  // Add new results by copying a line and changing the text.
-  // IMPORTANT: every result except the last one needs a comma.
-  // ============================================================
-  finalDetail: [
-    "One horn is broken",
-    "One horn is dramatically larger than the other",
-    "One horn curls around an ear",
-    "Horns have jewellery hanging from them",
-    "Horns have been painted",
-    "One antler has flowers growing from it",
-    "Gold caps on the tips of their horns",
-    "One ear is noticeably floppy",
-    "One ear has a bite missing from it",
-    "One ear is covered in piercings",
-    "Ears are absurdly oversized",
-    "Ears are ridiculously tiny",
-    "One eye is a different colour",
-    "One eye is completely black",
-    "One eye is completely white",
-    "One eye is replaced with a gemstone",
-    "One eye is replaced with a flower",
-    "One eye has a star-shaped pupil",
-    "Pupils are heart-shaped",
-    "Pupils are horizontal like a goat's",
-    "Pupils are ridiculously large",
-    "Permanent dark circles under the eyes",
-    "One eyebrow is shaved",
-    "No eyebrows whatsoever",
-    "One eyebrow is dramatically longer than the other",
-    "Freckles form little constellations",
-    "Freckles cover their entire body",
-    "Beauty marks arranged suspiciously symmetrically",
-    "A huge birthmark across half the face",
-    "A heart-shaped birthmark",
-    "A hand-shaped birthmark",
-    "A large facial scar",
-    "Scar straight through one eyebrow",
-    "Several tiny scars across the nose",
-    "Gold-filled scars",
-    "Glowing scars",
-    "Stitches visible across the body",
-    "One cheek is cracked like porcelain",
-    "Their entire face is cracked like an old statue",
-    "One half of their face has a completely different texture",
-    "Their face is perfectly symmetrical. Too symmetrical.",
-    "Nose has clearly been broken several times",
-    "Huge hooked nose",
-    "Tiny button nose",
-    "One enormous front tooth",
-    "Noticeable tooth gap",
-    "Gold fang",
-    "One fang is broken",
-    "Tusks decorated with jewellery",
-    "Teeth visible even when the mouth is closed",
-    "Mouth is slightly too wide",
-    "Mouth extends almost to the ears",
-    "Second tiny mouth somewhere on the face",
-    "A mouth in the palm of one hand",
-    "A single tiny eye on their forehead",
-    "Tiny extra eyes beneath the normal ones",
-    "An eye hidden in the centre of their chest",
-    "Extra face on the back of their head",
-    "Face is partially covered by feathers",
-    "Face is partially covered by scales",
-    "Fur only grows on one half of the body",
-    "A mane running down the entire spine",
-    "A ridge of feathers running down the spine",
-    "Mushrooms growing from one shoulder",
-    "Flowers growing directly from their hair",
-    "Moss growing across their shoulders",
-    "Small branches growing from their head",
-    "Vines wrapped naturally around one arm",
-    "One arm is made of wood",
-    "One arm is skeletal",
-    "One arm is translucent",
-    "One arm is considerably larger than the other",
-    "One hand is permanently enormous",
-    "Fingertips fade into a different colour",
-    "Claws are ridiculously long",
-    "Claws are painted",
-    "Gold claws",
-    "One finger is missing",
-    "Extra thumb",
-    "Six fingers on each hand",
-    "Hands fade into black at the fingertips",
-    "One leg is digitigrade, the other isn't",
-    "One leg is visibly mechanical",
-    "One foot is a hoof, the other isn't",
-    "Knees have small horns",
-    "Elbows have feathers",
-    "Shoulders have spikes",
-    "Small wings growing from the ankles",
-    "Tiny wings growing from the head",
-    "Tiny decorative wings where ears should be",
-    "Wings have jewellery threaded through them",
-    "One wing is damaged",
-    "One wing is dramatically smaller",
-    "Wings are mismatched species",
-    "Butterfly wings with obvious bite marks",
-    "Feathers have eye-like markings",
-    "Tail ends in a large bow of fur",
-    "Tail has bells attached",
-    "Tail has jewellery pierced through it",
-    "Tail ends in a hand",
-    "Tail splits into two at the end",
-    "Tail has a tuft that looks suspiciously like a hairstyle",
-    "Tail is braided",
-    "Their tail wears a tiny bracelet",
-    "A halo",
-    "A cracked halo",
-    "A halo that is far too large",
-    "Several tiny halos",
-    "Halo sits around their neck instead",
-    "Halo floats vertically behind their head",
-    "A floating crown that never touches their head",
-    "Floating gemstones orbit their head",
-    "Floating shards of glass orbit their body",
-    "A permanent ring of tiny stars around them",
-    "A tiny rain cloud floating over their head",
-    "A miniature moon orbiting them",
-    "A visible keyhole somewhere on their body",
-    "A wind-up key sticking out of their back",
-    "Visible puppet joints",
-    "Visible strings disappearing upwards",
-    "Porcelain ball joints",
-    "Hinged jaw like a puppet",
-    "A zipper running down their back",
-    "Decorative stitching around the edges of their body",
-    "A little door in their chest",
-    "A glass window in their torso",
-    "Ribcage visible through transparent skin",
-    "A glowing object visible inside their chest",
-    "A tiny ecosystem visible inside their transparent belly",
-    "Fish swimming inside them",
-    "Their hair contains tiny stars",
-    "Hair floats as though underwater",
-    "Hair turns into smoke at the ends",
-    "Hair turns into leaves at the ends",
-    "Hair is actually feathers",
-    "Hair is actually tentacles",
-    "Hair is actually tiny hands",
-    "One extremely long braid reaching the floor",
-    "One ridiculous cowlick that defies gravity",
-    "A completely inexplicable handle",
-    "A price tag they apparently cannot remove",
-    "A manufacturer's stamp somewhere on their body",
-    "A little maker's signature on their cheek",
-    "A barcode",
-    "A pull-cord hanging from their back",
-    "A large decorative bow somewhere wildly inappropriate",
-    "One completely ordinary human hand despite everything else",
-    "One completely ordinary human foot despite everything else",
-    "A tiny version of themselves sitting on their shoulder",
-    "A second, much smaller face that looks deeply unimpressed",
-    "One visual feature the artist must add without explaining it"
-  ],
-
-  // ============================================================
-  // ARTIST POSE SITUATION
-  // Add new results by copying a line and changing the text.
-  // IMPORTANT: every result except the last one needs a comma.
+  // POSE SUGGESTION
+  // Preserved from the previous version, with the display name changed.
   // ============================================================
   pose: [
     "Neutral character turnaround",
@@ -1157,236 +830,27 @@ const DATA = {
 };
 
 
-// ============================================================
-// HAIR COLOUR
-// Used together with Hair Length, Hair Style and Hair Texture
-// to build one complete "What Does Their Hair Look Like?" result.
-// ============================================================
-const HAIR_COLOURS = [
-  "Black",
-  "Blue-black",
-  "Dark brown",
-  "Chocolate brown",
-  "Chestnut brown",
-  "Warm brown",
-  "Light brown",
-  "Auburn",
-  "Copper",
-  "Ginger",
-  "Strawberry blonde",
-  "Honey blonde",
-  "Golden blonde",
-  "Ash blonde",
-  "Platinum blonde",
-  "Grey",
-  "Silver",
-  "White",
-  "Salt-and-pepper",
-  "Rose gold",
-  "Dusty pink",
-  "Hot pink",
-  "Magenta",
-  "Scarlet",
-  "Crimson",
-  "Orange",
-  "Sunflower yellow",
-  "Lime green",
-  "Emerald green",
-  "Forest green",
-  "Mint green",
-  "Teal",
-  "Turquoise",
-  "Cyan",
-  "Sky blue",
-  "Royal blue",
-  "Navy",
-  "Lavender",
-  "Violet",
-  "Purple",
-  "Black with a white streak",
-  "Brown with silver streaks",
-  "White with black roots",
-  "Half black, half white",
-  "Half pink, half blue",
-  "Rainbow",
-  "Pastel rainbow",
-  "Sunset ombré",
-  "Ocean ombré",
-  "Oil-slick iridescent",
-  "Metallic gold",
-  "Metallic silver",
-  "Glowing white",
-  "Glowing blue",
-  "Star-speckled black",
-  "Looks like fire",
-  "Looks like smoke",
-  "Looks like water",
-  "Changes colour toward the ends",
-  "A colour the artist has to invent"
-];
-
-// ============================================================
-// HAIR LENGTH
-// ============================================================
-const HAIR_LENGTHS = [
-  "Completely bald",
-  "Shaved to the scalp",
-  "Very short",
-  "Ear-length",
-  "Chin-length",
-  "Jaw-length",
-  "Shoulder-length",
-  "Collarbone-length",
-  "Chest-length",
-  "Mid-back length",
-  "Waist-length",
-  "Hip-length",
-  "Thigh-length",
-  "Knee-length",
-  "Floor-length",
-  "Long enough to trail behind them",
-  "Uneven, hacked-off length",
-  "Short at the front and extremely long at the back",
-  "One side shaved, the other dramatically long",
-  "Impossibly long"
-];
-
-// ============================================================
-// HAIR STYLE
-// ============================================================
-const HAIR_STYLES = [
-  "Loose and unstyled",
-  "Neatly brushed back",
-  "Centre-parted",
-  "Deep side part",
-  "Blunt bob",
-  "Messy bob",
-  "Pixie cut",
-  "Undercut",
-  "Side shave",
-  "Mohawk",
-  "Soft mullet",
-  "Aggressive mullet",
-  "Wolf cut",
-  "Shag cut",
-  "Long layers",
-  "Face-framing layers",
-  "Heavy fringe",
-  "Curtain fringe",
-  "Tiny micro-fringe",
-  "Slicked straight back",
-  "High ponytail",
-  "Low ponytail",
-  "Side ponytail",
-  "Two ponytails",
-  "High bun",
-  "Low bun",
-  "Messy bun",
-  "Two buns",
-  "Top knot",
-  "Half-up, half-down",
-  "Single long braid",
-  "Two braids",
-  "Many tiny braids",
-  "Crown braid",
-  "Fishtail braid",
-  "Bubble braid",
-  "Braided ponytail",
-  "Dreadlocks",
-  "Locs piled high",
-  "Bantu knots",
-  "Cornrows",
-  "Braids decorated with beads",
-  "Hair woven around the horns",
-  "Hair braided into the tail",
-  "Elaborate court hairstyle",
-  "Massive powdered-wig silhouette",
-  "Victorian ringlets",
-  "Renaissance braids",
-  "Wild windswept mane",
-  "Bed hair that somehow works",
-  "Perfectly symmetrical hairstyle",
-  "Deliberately asymmetrical hairstyle",
-  "Hair covering one eye",
-  "Hair covering most of the face",
-  "Hair standing straight upward",
-  "Hair floating around the head",
-  "A hairstyle held together by an unreasonable number of pins",
-  "One enormous braid",
-  "Several braids floating independently",
-  "The artist is legally required to give them dramatic bangs"
-];
-
-// ============================================================
-// HAIR TEXTURE
-// ============================================================
-const HAIR_TEXTURES = [
-  "Pin-straight",
-  "Straight and silky",
-  "Fine and wispy",
-  "Thick and straight",
-  "Softly wavy",
-  "Loose waves",
-  "Deep waves",
-  "Loose curls",
-  "Large ringlets",
-  "Tight curls",
-  "Coily",
-  "Very tightly coiled",
-  "Dense and fluffy",
-  "Cloud-like",
-  "Frizzy",
-  "Rough and coarse",
-  "Feather-soft",
-  "Glossy",
-  "Matte",
-  "Wet-looking",
-  "Crystalline",
-  "Made of soft feathers",
-  "Made of long feathers",
-  "Made of leaves",
-  "Made of moss",
-  "Made of grass",
-  "Made of flower petals",
-  "Made of vines",
-  "Made of tiny branches",
-  "Made of smoke",
-  "Made of flame",
-  "Made of water",
-  "Made of shadow",
-  "Made of translucent jelly",
-  "Made of fine tentacles",
-  "Made of tiny snakes",
-  "Made of fibre-optic-like glowing strands",
-  "Made of metallic wire",
-  "Looks like spun glass",
-  "Floats as though underwater",
-  "Moves independently in a light breeze that does not exist"
-];
-
 // ===============================================================
 // CATEGORY ORDER / DISPLAY NAMES
 // You normally do not need to edit this section.
 // ===============================================================
 
 const fields = [
-  ["baseForm", "Base Form"],
-  ["size", "Size"],
-  ["eyes", "How Many Eyes?"],
-  ["arms", "How Many Arms?"],
-  ["legs", "How Many Legs?"],
-  ["handsFeet", "Hands & Feet Situation"],
-  ["tail", "Tail Situation"],
-  ["skin", "Skin Situation"],
-  ["hair", "What Does Their Hair Look Like?"],
-  ["extras", "Horns, Wings & Teeth?"],
+  ["base", "Base"],
+  ["headShape", "Head Shape"],
+  ["ears", "Ears"],
+  ["eyes", "Eyes"],
+  ["nose", "Nose"],
+  ["mouthTeeth", "Mouth & Teeth"],
+  ["armsHands", "Arms & Hands"],
+  ["legsFeet", "Legs & Feet"],
+  ["skin", "Skin"],
+  ["extras", "Extras"],
   ["fashion", "Fashion Style"],
   ["accessories", "Accessories"],
   ["personality", "Personality Vibe"],
-  ["attractiveness", "How Attractive Are They Supposed to Be?"],
-  ["romantasy", "Would They Be the Lead in a Romantasy?"],
-  ["finalDetail", "Final Questionable Detail"],
-  ["pose", "Artist Pose Situation"]
+  ["romantasy", "Romantasy Lead?"],
+  ["pose", "Pose Suggestion"]
 ];
 const state = Object.fromEntries(fields.map(([key]) => [key, {value:"",locked:false}]));
 
@@ -1395,24 +859,13 @@ function randomItem(arr) {
 }
 
 function generateField(key) {
-  if (key === "hair") {
-    return `${randomItem(HAIR_COLOURS)}, ${randomItem(HAIR_LENGTHS)}, ${randomItem(HAIR_STYLES)}, ${randomItem(HAIR_TEXTURES)}`;
-  }
   return randomItem(DATA[key]);
 }
-/* ============================================================
-   VISUAL SHUFFLE EFFECT
-   ============================================================ */
 
 function shuffleField(key, duration = 650) {
   return new Promise((resolve) => {
-    const rowButton = document.querySelector(
-      `button.label[data-key="${key}"]`
-    );
-
-    const valueEl = rowButton
-      ? rowButton.parentElement.querySelector(".value")
-      : null;
+    const rowButton = document.querySelector(`button.label[data-key="${key}"]`);
+    const valueEl = rowButton ? rowButton.parentElement.querySelector(".value") : null;
 
     if (!valueEl) {
       state[key].value = generateField(key);
@@ -1427,38 +880,27 @@ function shuffleField(key, duration = 650) {
     const started = performance.now();
 
     const tick = () => {
-
-      /* Show a temporary random result */
       valueEl.textContent = generateField(key);
 
       const elapsed = performance.now() - started;
-
-      /* Stop shuffling and choose the final result */
       if (elapsed >= duration) {
         state[key].value = generateField(key);
-
         valueEl.textContent = state[key].value;
-
         valueEl.classList.remove("shuffling");
         rowButton.classList.remove("is-rolling");
-
         resolve();
         return;
       }
 
-      /*
-       * Starts quickly and gradually slows down,
-       * giving it the "landing on a result" effect.
-       */
       const progress = elapsed / duration;
       const delay = 45 + (progress * 110);
-
       setTimeout(tick, delay);
     };
 
     tick();
   });
 }
+
 function render() {
   const wrap = document.getElementById("generator");
   wrap.innerHTML = "";
@@ -1476,11 +918,9 @@ function render() {
 
 async function generateAll() {
   const button = document.getElementById("generateAll");
-
   button.classList.add("is-rolling");
 
   const jobs = [];
-
   for (const [key] of fields) {
     if (!state[key].locked) {
       jobs.push(shuffleField(key, 700));
@@ -1488,7 +928,6 @@ async function generateAll() {
   }
 
   await Promise.all(jobs);
-
   button.classList.remove("is-rolling");
 }
 
@@ -1497,7 +936,10 @@ document.getElementById("generator").addEventListener("click", e => {
   if (!btn) return;
   const key = btn.dataset.key;
   const action = btn.dataset.action;
-  if (action === "roll") {shuffleField(key, 700); return;}
+  if (action === "roll") {
+    shuffleField(key, 700);
+    return;
+  }
   if (action === "lock") state[key].locked = !state[key].locked;
   if (action === "clear") state[key].value = "";
   render();
